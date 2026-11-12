@@ -37,7 +37,28 @@ void main(int argc, char* argv[]) {
 		if (client_fd == -1) {
 			std::cout << "Fialed to accept client" << std::endl;
 			std::cerr << "Failed to accept client: " << addr.sin_port;
-			return EXIT_FAILURE;
+			continue;
 		}
 
+		char[] buf[100]{};
+		int char_read = read(client_fd, buf, 100);
+		if (char_read == -1) {
+			std::cout << "Failed to read from client" << std::endl;
+			std::cerr << "Failed to read from client. Error: " << errno;
+			close(client_fd);
+			continue;
+		}
+
+		int char_written = write(client_fd, buf, 100);
+		if (char_written == -1) {
+			std::cout << "Failed to write to client" << std::endl;
+			std::cerr << "Failed to write to client. Error: " << errno;
+			close(client_fd);
+			continue;
+		}	
+	}
+
+
+	return EXIT_SUCCESS;
+}
 			
