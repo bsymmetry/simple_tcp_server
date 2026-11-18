@@ -1,11 +1,11 @@
-$(BUILD) := build
-$(CC) := clang
+BUILD := build
+CC := clang
 
 .PHONY: all clean test
 
 all: $(BUILD)/stcps tests/stcps_tests
 
-$(BUILD)/stcps: src/main.c | $(BUILD)
+$(BUILD)/stcps: src/server/main.cpp | $(BUILD)
 	$(CC) -c $< -o $@
 
 $(BUILD):
@@ -18,4 +18,4 @@ test:
 	./tests/stcps_tests
 
 clean:
-	rm -rf $(BUILD)
+	rm -rf $(BUILD) tests/stcps_tests
